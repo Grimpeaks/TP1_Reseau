@@ -2,13 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\main",
-    "\\main\\exeClient\\include",
     "\\main\\exeClient\\src",
+    "\\main\\libClient",
     "\\main\\libClient\\include",
     "\\main\\libClient\\src",
-    "\\main\\libCommon",
-    "\\main\\libCommon\\src"
+    "\\main\\libCommon\\src",
+    "\\main\\libServer",
+    "\\main\\libServer\\include",
+    "\\main\\libServer\\src"
   ],
-  "SelectedNode": "\\main\\libCommon\\src\\Message.cpp",
+  "SelectedNode": "\\main\\libServer\\src\\server_lib.cpp",
   "PreviewInSolutionExplorer": false
 }

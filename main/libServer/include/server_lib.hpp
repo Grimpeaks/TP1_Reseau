@@ -36,13 +36,18 @@ namespace thunderchat
 class ThunderChatServer
 {
 private:
+  using connectCallbackType =  std::function<void(const std::string& client)>;
+  using disconnectCallbackType = std::function<void(const std::string& client)>;
+
+  std::vector<connectCallbackType> m_onConnectCallbacks;
+  std::vector<disconnectCallbackType> m_onDisconnectCallbacks;
 
 public:
     ThunderChatServer(std::string servAddress, u_short port);
 
-    void OnConnect();
+    void OnConnect(connectCallbackType connectCallback);
 
-    void OnDisconnect();
+    void OnDisconnect(disconnectCallbackType disconnectCallback);
 
     void Stop();
 };

@@ -40,15 +40,21 @@ ThunderChatServer::ThunderChatServer(std::string servAddress, u_short port)
     }
 }
 
-void ThunderChatServer::OnConnect()
+void ThunderChatServer::OnConnect(connectCallbackType connectCallback)
 {
-
+    m_onDisconnectCallbacks.push_back(connectCallback);
 }
 
-void ThunderChatServer::OnDisconnect() {}
+void ThunderChatServer::OnDisconnect(disconnectCallbackType disconnectCallback)
+{ 
+	m_onDisconnectCallbacks.push_back(disconnectCallback);
+}
 
 void ThunderChatServer::Stop() 
 {
 
+
 }
+
+
 } // namespace thunderchat
