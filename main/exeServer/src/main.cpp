@@ -1,4 +1,5 @@
 #include <iostream>
+#include <server_lib.hpp>
 
 int main(void)
 {

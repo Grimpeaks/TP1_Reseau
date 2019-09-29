@@ -14,3 +14,5 @@ set(HEADERS ${INCLUDE_FOLDER}/main.hpp)
 
 #client exec
 add_executable(Client ${SOURCES} ${HEADERS})
+
+target_link_libraries(Client client_lib)

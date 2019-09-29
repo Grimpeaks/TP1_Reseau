@@ -14,3 +14,4 @@ set(HEADERS ${INCLUDE_FOLDER}/main.hpp)
 
 #Main exec
 add_executable(Server ${SOURCES} ${HEADERS})
+target_link_libraries(Server server_lib)
