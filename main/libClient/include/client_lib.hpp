@@ -15,17 +15,7 @@
 namespace thunderchat
 {
 
-enum Team
-{
-    A = 0,
-    B = 1
-};
 
-enum MsgType
-{
-    PARTY = 0,
-    TEAM = 1
-};
 
 class ThunderChatClient
 {
@@ -36,7 +26,7 @@ private:
     std::unique_ptr<std::thread> m_receiveThread;
     std::string m_servAddress;
     std::string m_userName;
-    Team m_team;
+    Message::Team m_team;
     SOCKET s;
     sockaddr_in addrv4Serv;
 	std::vector<msgCallbackType> m_onMessageCallbacks;
@@ -45,7 +35,7 @@ private:
 	void sendJson(nlohmann::json json);
 
 public:
-    ThunderChatClient(std::string servAddr, std::string usrName, Team team);
+    ThunderChatClient(std::string servAddr, std::string usrName, Message::Team team);
     ~ThunderChatClient();
     bool Connect();
     void OnMessage(msgCallbackType);

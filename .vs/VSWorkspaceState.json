@@ -1,7 +1,14 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\main",
+    "\\main\\exeClient\\include",
+    "\\main\\exeClient\\src",
+    "\\main\\libClient\\include",
+    "\\main\\libClient\\src",
+    "\\main\\libCommon",
+    "\\main\\libCommon\\src"
   ],
-  "SelectedNode": "\\C:\\Users\\Grimpeaks\\Documents\\GitHub\\UQAC\\maitrise1\\Reseau\\TP1_Reseau\\CMakeLists.txt\\common_libd.lib (C:\\Users\\Grimpeaks\\Documents\\GitHub\\UQAC\\maitrise1\\Reseau\\TP1_Reseau\\output\\lib\\common_libd.lib)",
+  "SelectedNode": "\\main\\libCommon\\src\\Message.cpp",
   "PreviewInSolutionExplorer": false
 }
