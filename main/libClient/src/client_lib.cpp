@@ -3,10 +3,18 @@
 namespace thunderchat
 {
 ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userName, Message::Team team)
-    : m_receiveThread(nullptr), m_servAddress(servAddress), m_userName(userName), m_team(team), s(), addrv4Serv(){}
+    : m_receiveThread(nullptr), m_servAddress(servAddress), m_servPort(8888), m_userName(userName), m_team(team), s(), addrv4Serv(),
+	m_onMessageCallbacks(), m_onDisconnectCallbacks(), m_success(true)
+{
+	//TODO Take port !!!!!!!!!!!!!!!!!!!!1
+}
 
 	ThunderChatClient::~ThunderChatClient()
 	{
+		std::for_each(m_onDisconnectCallbacks.begin(), m_onDisconnectCallbacks.end(), [](disconnectCallbackType callback) {
+			callback();
+		});
+
 		if (m_receiveThread != nullptr && m_receiveThread->joinable())
 		{
 			m_receiveThread->join();
@@ -21,23 +29,25 @@ ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userNa
 		s = socket(AF_INET, SOCK_STREAM, 0);
 		if (s <= 0)
 		{
-			std::cout << "Error2";
+			std::cout << "Client : sock ERROR";
+			m_success = false;
 			return false;
 		}
 
 		sockaddr_in addrv4Serv;
 		addrv4Serv.sin_family = AF_INET;
 		addrv4Serv.sin_port = htons(8888);
-		if (inet_pton(AF_INET, "127.0.0.1", &(addrv4Serv.sin_addr)) < 0)
+		if (inet_pton(AF_INET, m_servAddress.c_str(), &(addrv4Serv.sin_addr)) < 0)
 		{
-			std::cout << "Error3";
+			std::cout << "Client : addr ERROR";
+			m_success = false;
 			return false;
 		}
 
 		if (connect(s, reinterpret_cast<sockaddr*>(&addrv4Serv), sizeof(sockaddr)) < 0)
 		{
 			std::cout << "Client : Connection ERROR";
-			//closesocket(s);
+			m_success = false;
 			return false;
 		}
 
@@ -47,18 +57,23 @@ ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userNa
 
 	void ThunderChatClient::recvOnThread()
 	{
-		while (true)
+		while (m_success)
 		{
 			std::array<char, 1024> buffer;
 			size_t receivedBytes = recv(s, buffer.data(), 1024, 0);
 
-			if (receivedBytes > 0)
+			if (receivedBytes > 0 && receivedBytes <= 1024)
 			{
 				std::string str(buffer.begin(), buffer.begin() + receivedBytes);
 				std::for_each(m_onMessageCallbacks.begin(), m_onMessageCallbacks.end(), [&str](msgCallbackType callback) {
 					callback(str);
 				});
 				receivedBytes = 0;
+			}
+			else if (receivedBytes > 1024 || receivedBytes < 0)
+			{
+				std::cout << "Client : recv ERROR";
+				m_success = false;
 			}
 		}
 	}
@@ -75,34 +90,26 @@ ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userNa
 
 	void ThunderChatClient::SendToParty(const std::string& msg)
 	{
-		/*nlohmann::json j = { {"username", m_userName},
-							{"msg_type", PARTY},
-							{"team", m_team},
-							{"msg", msg} };
-		sendJson(j);*/
+		Message message = Message(m_userName, Message::PARTY, m_team, msg);
+		sendJson(message.to_JSON());
 	}
 
 	void ThunderChatClient::SendToTeam(const std::string& msg)
 	{
-		/*nlohmann::json j = { {"username", m_userName},
-							{"msg_type", TEAM},
-							{"team", m_team},
-							{"msg", msg} };
-		sendJson(j);*/
+		Message message = Message(m_userName, Message::TEAM, m_team, msg);
+		sendJson(message.to_JSON());
 	}
 
 	void ThunderChatClient::SendString(const std::string& msg)
 	{
-		std::array<char, 1024> buffer{};
-		std::cout << "Type here : ";
-		std::cin >> buffer.data();
-		int sentBytes = send(s, buffer.data(), buffer.size(), 0);
+		//std::array<char, 1024> buffer{};
+		//buffer = { reinterpret_cast<char>(msg.c_str()) };
+		int sentBytes = send(s, msg.c_str(), msg.size(), 0);
 		if (sentBytes < 0)
 		{
 			printf(" RECVBIG recv() error %ld.\n", WSAGetLastError());
 			std::cout << "Error5" << std::endl;
-			//closesocket(s);
-			//return EXIT_FAILURE;
+			m_success = false;
 		}
 	}
 
@@ -112,8 +119,7 @@ ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userNa
 		if (sentJson < 0)
 		{
 			std::cout << "Client : send ERROR" << std::endl;
-			//closesocket(s);
-			// return EXIT_FAILURE;
+			m_success = false;
 		}
 	}
 } // namespace thunderchat

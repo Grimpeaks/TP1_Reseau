@@ -13,6 +13,11 @@ int main(void)
 		std::cout << msg << std::endl;
 	};
 
+	/*std::function<void(const Message&)> y = [](const Message& msg)
+	{
+		std::cout << msg << std::endl;
+	};*/
+
 	client.OnMessage(y);
 	bool sucess;
 	sucess = client.Connect();
@@ -21,8 +26,7 @@ int main(void)
 	{
 		std::string msgg = "YPOOOOOoooooooooooooooo";
 		client.SendString(msgg);
+		std::cin.ignore();
+		client.SendString(msgg);
 	}
-
-
-
 }

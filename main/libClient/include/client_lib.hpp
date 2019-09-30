@@ -3,6 +3,7 @@
 #include <array>
 #include <iostream>
 #include <nlohmann/json.hpp>
+#include <fmt/format.h>
 #include <string>
 #include <thread>
 #include <memory>
@@ -10,7 +11,6 @@
 #include "network.hpp"
 #include "winnetworkconfig.hpp"
 #include "Message.hpp"
-
 
 namespace thunderchat
 {
@@ -25,12 +25,14 @@ private:
 
     std::unique_ptr<std::thread> m_receiveThread;
     std::string m_servAddress;
+	int m_servPort;
     std::string m_userName;
     Message::Team m_team;
     SOCKET s;
     sockaddr_in addrv4Serv;
 	std::vector<msgCallbackType> m_onMessageCallbacks;
 	std::vector<disconnectCallbackType> m_onDisconnectCallbacks;
+	bool m_success;
 
 	void sendJson(nlohmann::json json);
 	void recvOnThread();
