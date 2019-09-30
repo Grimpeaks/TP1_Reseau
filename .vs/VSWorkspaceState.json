@@ -2,11 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt",
-    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\Client.exe (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\bin\\Client.exe)\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\main\\exeClient\\src",
-    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\common_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\common_libd.lib)\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\main\\libCommon\\include",
+    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\client_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\client_libd.lib)",
+    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\client_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\client_libd.lib)\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\main\\libClient\\include",
+    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\client_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\client_libd.lib)\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\main\\libClient\\src",
+    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\common_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\common_libd.lib)",
     "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\common_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\common_libd.lib)\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\main\\libCommon\\src",
-    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\Server.exe (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\bin\\Server.exe)"
+    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\Server.exe (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\bin\\Server.exe)\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\main\\exeServer\\src",
+    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\server_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\server_libd.lib)",
+    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\server_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\server_libd.lib)\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\main\\libServer\\include"
   ],
-  "SelectedNode": "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\common_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\common_libd.lib)",
+  "SelectedNode": "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\common_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\common_libd.lib)\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\main\\libCommon\\src\\winnetworkconfig.cpp",
   "PreviewInSolutionExplorer": false
 }
