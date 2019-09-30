@@ -14,12 +14,15 @@ public:
 	};
 
 	Message(std::string username, MsgType msg_type, Team  team, std::string msg);
+    Message(nlohmann::json json);
 	nlohmann::json to_JSON();
 	std::string getUserName() { return m_username; };
+    bool Is_Message_Valide();
 
 private:
 	std::string m_username;
 	MsgType m_msg_type;
 	Team m_team;
 	std::string m_msg;
+    bool m_isValide=true;
 };

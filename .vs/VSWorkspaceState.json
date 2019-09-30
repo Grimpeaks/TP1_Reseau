@@ -1,7 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt",
+    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\Client.exe (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\bin\\Client.exe)\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\main\\exeClient\\src",
+    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\common_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\common_libd.lib)\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\main\\libCommon\\include",
+    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\common_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\common_libd.lib)\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\main\\libCommon\\src",
+    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\Server.exe (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\bin\\Server.exe)"
   ],
-  "SelectedNode": "\\C:\\Users\\Grimpeaks\\Documents\\GitHub\\UQAC\\maitrise1\\Reseau\\TP1_Reseau\\CMakeLists.txt\\common_libd.lib (C:\\Users\\Grimpeaks\\Documents\\GitHub\\UQAC\\maitrise1\\Reseau\\TP1_Reseau\\output\\lib\\common_libd.lib)\\C:\\Users\\Grimpeaks\\Documents\\GitHub\\UQAC\\maitrise1\\Reseau\\TP1_Reseau\\main\\libCommon\\src\\winnetworkconfig.cpp",
+  "SelectedNode": "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\common_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\common_libd.lib)",
   "PreviewInSolutionExplorer": false
 }
