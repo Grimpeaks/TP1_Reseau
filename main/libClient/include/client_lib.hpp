@@ -30,7 +30,7 @@ enum MsgType
 class ThunderChatClient
 {
 private:
-	using msgCallbackType = std::function<void(/*const Message & msg*/)>;
+	using msgCallbackType = std::function<void(std::string & msg/*const Message & msg*/)>;
 	using disconnectCallbackType = std::function<void()>;
 
     std::unique_ptr<std::thread> m_receiveThread;
@@ -43,6 +43,7 @@ private:
 	std::vector<disconnectCallbackType> m_onDisconnectCallbacks;
 
 	void sendJson(nlohmann::json json);
+	void recvOnThread();
 
 public:
     ThunderChatClient(std::string servAddr, std::string usrName, Team team);
@@ -52,5 +53,6 @@ public:
     void OnDisconnect(disconnectCallbackType);
     void SendToParty(const std::string& msg);
     void SendToTeam(const std::string& msg);
+	void SendString(const std::string& msg);
 };
 } // namespace thunderchat
