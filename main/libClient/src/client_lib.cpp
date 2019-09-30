@@ -58,6 +58,7 @@ ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userNa
 				std::for_each(m_onMessageCallbacks.begin(), m_onMessageCallbacks.end(), [&str](msgCallbackType callback) {
 					callback(str);
 				});
+				receivedBytes = 0;
 			}
 		}
 	}
