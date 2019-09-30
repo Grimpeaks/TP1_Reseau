@@ -2,8 +2,8 @@
 
 namespace thunderchat
 {
-	ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userName, Team team)
-		: m_receiveThread(nullptr), m_servAddress(servAddress), m_userName(userName), m_team(team), s(), addrv4Serv() {}
+ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userName, Message::Team team)
+    : m_receiveThread(nullptr), m_servAddress(servAddress), m_userName(userName), m_team(team), s(), addrv4Serv(){}
 
 	ThunderChatClient::~ThunderChatClient()
 	{
@@ -74,20 +74,20 @@ namespace thunderchat
 
 	void ThunderChatClient::SendToParty(const std::string& msg)
 	{
-		nlohmann::json j = { {"username", m_userName},
+		/*nlohmann::json j = { {"username", m_userName},
 							{"msg_type", PARTY},
 							{"team", m_team},
 							{"msg", msg} };
-		sendJson(j);
+		sendJson(j);*/
 	}
 
 	void ThunderChatClient::SendToTeam(const std::string& msg)
 	{
-		nlohmann::json j = { {"username", m_userName},
+		/*nlohmann::json j = { {"username", m_userName},
 							{"msg_type", TEAM},
 							{"team", m_team},
 							{"msg", msg} };
-		sendJson(j);
+		sendJson(j);*/
 	}
 
 	void ThunderChatClient::SendString(const std::string& msg)
