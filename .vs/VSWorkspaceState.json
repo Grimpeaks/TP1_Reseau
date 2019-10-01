@@ -1,15 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\main",
-    "\\main\\exeClient",
-    "\\main\\exeClient\\src",
-    "\\main\\libClient",
-    "\\main\\libClient\\src",
-    "\\main\\libCommon",
-    "\\main\\libCommon\\include",
-    "\\main\\libCommon\\src"
+    ""
   ],
-  "SelectedNode": "\\cmake",
+  "SelectedNode": "\\C:\\Users\\Grimpeaks\\Documents\\GitHub\\UQAC\\maitrise1\\Reseau\\TP1_Reseau\\CMakeLists.txt\\client_libd.lib (C:\\Users\\Grimpeaks\\Documents\\GitHub\\UQAC\\maitrise1\\Reseau\\TP1_Reseau\\output\\lib\\client_libd.lib)\\C:\\Users\\Grimpeaks\\Documents\\GitHub\\UQAC\\maitrise1\\Reseau\\TP1_Reseau\\main\\libClient\\src\\client_lib.cpp",
   "PreviewInSolutionExplorer": false
 }

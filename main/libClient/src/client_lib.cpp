@@ -6,6 +6,8 @@ ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userNa
     : m_receiveThread(nullptr), m_servAddress("0.0.0.0"), m_servPort(8888), m_userName(userName), m_team(team), s(), addrv4Serv(),
 	m_onMessageCallbacks(), m_onDisconnectCallbacks(), m_success(true)
 {
+	std::cout << "Client" << std::endl;
+
 	std::size_t found = servAddress.find(":");
 	m_servAddress = std::string(servAddress.begin(), servAddress.begin() + found);
 	m_servPort = std::stoi(std::string(servAddress.begin() + found+1, servAddress.end()));
