@@ -1,5 +1,6 @@
 #include "network.hpp"
 #include "winnetworkconfig.hpp"
+#include "Message.hpp"
 
 #include <string>
 #include <vector>
@@ -7,6 +8,7 @@
 #include <functional>
 #include <iostream>
 #include <vector>
+
 
 namespace thunderchat
 {
@@ -24,6 +26,7 @@ private:
   bool m_success=true;
   bool Accept_Client();
   bool Recieve_Client();
+  bool Send_to_Client();
 
 public:
     ThunderChatServer(std::string servAddress, u_short port);

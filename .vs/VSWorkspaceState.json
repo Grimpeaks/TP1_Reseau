@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\C:\\Users\\gintzopoul\\Documents\\GitHub\\TP1_Reseau\\CMakeLists.txt",
+    "\\C:\\Users\\gintzopoul\\Documents\\GitHub\\TP1_Reseau\\CMakeLists.txt\\Server.exe (C:\\Users\\gintzopoul\\Documents\\GitHub\\TP1_Reseau\\output\\bin\\Server.exe)",
+    "\\C:\\Users\\gintzopoul\\Documents\\GitHub\\TP1_Reseau\\CMakeLists.txt\\Server.exe (C:\\Users\\gintzopoul\\Documents\\GitHub\\TP1_Reseau\\output\\bin\\Server.exe)\\C:\\Users\\gintzopoul\\Documents\\GitHub\\TP1_Reseau\\main\\exeServer\\src"
   ],
-  "SelectedNode": "\\C:\\Users\\Grimpeaks\\Documents\\GitHub\\UQAC\\maitrise1\\Reseau\\TP1_Reseau\\CMakeLists.txt\\common_libd.lib (C:\\Users\\Grimpeaks\\Documents\\GitHub\\UQAC\\maitrise1\\Reseau\\TP1_Reseau\\output\\lib\\common_libd.lib)\\C:\\Users\\Grimpeaks\\Documents\\GitHub\\UQAC\\maitrise1\\Reseau\\TP1_Reseau\\main\\libCommon\\include\\Message.hpp",
+  "SelectedNode": "\\C:\\Users\\gintzopoul\\Documents\\GitHub\\TP1_Reseau\\CMakeLists.txt\\Server.exe (C:\\Users\\gintzopoul\\Documents\\GitHub\\TP1_Reseau\\output\\bin\\Server.exe)\\C:\\Users\\gintzopoul\\Documents\\GitHub\\TP1_Reseau\\main\\exeServer\\src\\main.cpp",
   "PreviewInSolutionExplorer": false
 }

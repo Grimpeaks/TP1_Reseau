@@ -139,10 +139,61 @@ bool ThunderChatServer::Recieve_Client() {
 				}
 
 				std::cout << "I received : " << std::string(buffer.data(), receivedBytes).c_str() << std::endl;
+				
+				Send_to_Client();
 			}
 		}
 	}
 
+}
+
+bool ThunderChatServer::Send_to_Client()
+{
+    fd_set setWrite;
+    fd_set setErrors;
+    FD_ZERO(&setWrite);
+    FD_ZERO(&setErrors);
+    int highestFd = 0;
+    timeval timeout = {0};
+    for (auto& client : this->m_listeClient)
+    {
+        FD_SET(client, &setWrite);
+        FD_SET(client, &setErrors);
+    }
+
+    int selectResult = select(highestFd + 1, nullptr, &setWrite, &setErrors, &timeout);
+    if (selectResult == -1)
+    {
+        this->m_success = false;
+        return false;
+    }
+
+    else if (selectResult > 0)
+    {
+        for (auto& client : m_listeClient)
+        {
+            if (FD_ISSET(client, &setErrors))
+            {
+                this->m_success = false;
+                return false;
+            }
+            else if (FD_ISSET(client, &setWrite))
+            {
+
+				Message msg = Message("SALEPUTE", Message::PARTY, Message::A, "SALEPUTE");
+                std::string msgjson = msg.to_JSON().dump();
+                int sentJson = send(client, msgjson.c_str(), msgjson.size(), 0);
+
+                int sentBytes = send(client, msg.to_JSON().dump().c_str(),msg.to_JSON().dump().size(), 0);
+                if (msgjson.size() != sentBytes)
+                {
+                    std::cout << "Error2" << std::endl;
+                    closesocket(client);
+                    return EXIT_FAILURE;
+                }
+            }
+        }
+    }
 }
 
 } // namespace thunderchat
