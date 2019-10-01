@@ -3,7 +3,7 @@
 
 int main(void)
 {
-    std::cout << "Client : Hello world" << std::endl;
+    //std::cout << "Client : Hello world" << std::endl;
 
 	network::WinNetworkConfig networkInit = network::WinNetworkConfig();
 	thunderchat::ThunderChatClient client = thunderchat::ThunderChatClient("127.0.0.1", "POUPOU", Message::A);
@@ -28,5 +28,6 @@ int main(void)
 		client.SendString(msgg);
 		std::cin.ignore();
 		client.SendString(msgg);
+		
 	}
 }

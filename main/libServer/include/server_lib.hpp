@@ -18,8 +18,12 @@ private:
 
   std::vector<connectCallbackType> m_onConnectCallbacks;
   std::vector<disconnectCallbackType> m_onDisconnectCallbacks;
+  std::vector<SOCKET> m_listeClient;
+  SOCKET m_socket;
 
   bool m_success=true;
+  bool Accept_Client();
+  bool Recieve_Client();
 
 public:
     ThunderChatServer(std::string servAddress, u_short port);

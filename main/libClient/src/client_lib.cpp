@@ -6,6 +6,7 @@ ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userNa
     : m_receiveThread(nullptr), m_servAddress(servAddress), m_servPort(8888), m_userName(userName), m_team(team), s(), addrv4Serv(),
 	m_onMessageCallbacks(), m_onDisconnectCallbacks(), m_success(true)
 {
+	std::cout << "Server : Hello world" << std::endl;
 	//TODO Take port !!!!!!!!!!!!!!!!!!!!1
 }
 
@@ -36,7 +37,7 @@ ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userNa
 
 		sockaddr_in addrv4Serv;
 		addrv4Serv.sin_family = AF_INET;
-		addrv4Serv.sin_port = htons(8888);
+		addrv4Serv.sin_port = htons(m_servPort);
 		if (inet_pton(AF_INET, m_servAddress.c_str(), &(addrv4Serv.sin_addr)) < 0)
 		{
 			std::cout << "Client : addr ERROR";

@@ -1,16 +1,15 @@
 {
   "ExpandedNodes": [
     "",
-    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt",
-    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\client_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\client_libd.lib)",
-    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\client_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\client_libd.lib)\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\main\\libClient\\include",
-    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\client_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\client_libd.lib)\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\main\\libClient\\src",
-    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\common_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\common_libd.lib)",
-    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\common_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\common_libd.lib)\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\main\\libCommon\\src",
-    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\Server.exe (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\bin\\Server.exe)\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\main\\exeServer\\src",
-    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\server_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\server_libd.lib)",
-    "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\server_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\server_libd.lib)\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\main\\libServer\\include"
+    "\\main",
+    "\\main\\exeClient",
+    "\\main\\exeClient\\src",
+    "\\main\\exeServer",
+    "\\main\\exeServer\\src",
+    "\\main\\libServer",
+    "\\main\\libServer\\include",
+    "\\main\\libServer\\src"
   ],
-  "SelectedNode": "\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\CMakeLists.txt\\common_libd.lib (C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\output\\lib\\common_libd.lib)\\C:\\Users\\aamen\\Desktop\\Prog_Reseau_Git\\TP1_Reseau\\main\\libCommon\\src\\winnetworkconfig.cpp",
+  "SelectedNode": "\\main\\exeClient\\src\\main.cpp",
   "PreviewInSolutionExplorer": false
 }
