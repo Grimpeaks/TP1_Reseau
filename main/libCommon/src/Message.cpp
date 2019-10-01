@@ -8,7 +8,7 @@ Message::Message(std::string username, MsgType msg_type, Team team, std::string 
 
 }
 
-nlohmann::json Message::to_JSON() {
+const nlohmann::json Message::to_JSON() {
 	nlohmann::json j = { {"username", this->m_username},
 						{"msg_type", this->m_msg_type},
 						{"team", this->m_team},

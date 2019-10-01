@@ -14,8 +14,7 @@ public:
 	};
 
 	Message(std::string username, MsgType msg_type, Team  team, std::string msg);
-	nlohmann::json to_JSON();
-	std::string getUserName() { return m_username; };
+	const nlohmann::json to_JSON();
 
 private:
 	std::string m_username;

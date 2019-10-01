@@ -7,16 +7,13 @@
 #include <string>
 #include <thread>
 #include <memory>
-
+ 
 #include "network.hpp"
 #include "winnetworkconfig.hpp"
 #include "Message.hpp"
 
 namespace thunderchat
 {
-
-
-
 class ThunderChatClient
 {
 private:

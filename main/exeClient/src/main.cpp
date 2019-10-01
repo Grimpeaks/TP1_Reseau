@@ -6,7 +6,7 @@ int main(void)
     std::cout << "Client : Hello world" << std::endl;
 
 	network::WinNetworkConfig networkInit = network::WinNetworkConfig();
-	thunderchat::ThunderChatClient client = thunderchat::ThunderChatClient("127.0.0.1", "POUPOU", Message::A);
+	thunderchat::ThunderChatClient client = thunderchat::ThunderChatClient("127.0.0.1:8888", "POUPOU", Message::A);
 	
 	std::function<void(std::string)> y = [](std::string& msg)
 	{

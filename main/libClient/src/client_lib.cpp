@@ -3,10 +3,12 @@
 namespace thunderchat
 {
 ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userName, Message::Team team)
-    : m_receiveThread(nullptr), m_servAddress(servAddress), m_servPort(8888), m_userName(userName), m_team(team), s(), addrv4Serv(),
+    : m_receiveThread(nullptr), m_servAddress("0.0.0.0"), m_servPort(8888), m_userName(userName), m_team(team), s(), addrv4Serv(),
 	m_onMessageCallbacks(), m_onDisconnectCallbacks(), m_success(true)
 {
-	//TODO Take port !!!!!!!!!!!!!!!!!!!!1
+	std::size_t found = servAddress.find(":");
+	m_servAddress = std::string(servAddress.begin(), servAddress.begin() + found);
+	m_servPort = std::stoi(std::string(servAddress.begin() + found+1, servAddress.end()));
 }
 
 	ThunderChatClient::~ThunderChatClient()
@@ -36,7 +38,7 @@ ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userNa
 
 		sockaddr_in addrv4Serv;
 		addrv4Serv.sin_family = AF_INET;
-		addrv4Serv.sin_port = htons(8888);
+		addrv4Serv.sin_port = htons(m_servPort);
 		if (inet_pton(AF_INET, m_servAddress.c_str(), &(addrv4Serv.sin_addr)) < 0)
 		{
 			std::cout << "Client : addr ERROR";
@@ -52,6 +54,8 @@ ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userNa
 		}
 
 		m_receiveThread = std::make_unique<std::thread>([this]() {recvOnThread(); });
+
+
 		return true;
 	}
 

@@ -1,7 +1,15 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\main",
+    "\\main\\exeClient",
+    "\\main\\exeClient\\src",
+    "\\main\\libClient",
+    "\\main\\libClient\\src",
+    "\\main\\libCommon",
+    "\\main\\libCommon\\include",
+    "\\main\\libCommon\\src"
   ],
-  "SelectedNode": "\\C:\\Users\\Grimpeaks\\Documents\\GitHub\\UQAC\\maitrise1\\Reseau\\TP1_Reseau\\CMakeLists.txt\\common_libd.lib (C:\\Users\\Grimpeaks\\Documents\\GitHub\\UQAC\\maitrise1\\Reseau\\TP1_Reseau\\output\\lib\\common_libd.lib)\\C:\\Users\\Grimpeaks\\Documents\\GitHub\\UQAC\\maitrise1\\Reseau\\TP1_Reseau\\main\\libCommon\\src\\winnetworkconfig.cpp",
+  "SelectedNode": "\\cmake",
   "PreviewInSolutionExplorer": false
 }
