@@ -1,10 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\C:\\Users\\gintzopoul\\Documents\\GitHub\\TP1_Reseau\\CMakeLists.txt",
-    "\\C:\\Users\\gintzopoul\\Documents\\GitHub\\TP1_Reseau\\CMakeLists.txt\\Server.exe (C:\\Users\\gintzopoul\\Documents\\GitHub\\TP1_Reseau\\output\\bin\\Server.exe)",
-    "\\C:\\Users\\gintzopoul\\Documents\\GitHub\\TP1_Reseau\\CMakeLists.txt\\Server.exe (C:\\Users\\gintzopoul\\Documents\\GitHub\\TP1_Reseau\\output\\bin\\Server.exe)\\C:\\Users\\gintzopoul\\Documents\\GitHub\\TP1_Reseau\\main\\exeServer\\src"
+    "\\main",
+    "\\main\\exeClient",
+    "\\main\\exeClient\\src",
+    "\\main\\exeServer",
+    "\\main\\exeServer\\src",
+    "\\main\\libClient",
+    "\\main\\libClient\\src",
+    "\\main\\libServer",
+    "\\main\\libServer\\src"
   ],
-  "SelectedNode": "\\C:\\Users\\gintzopoul\\Documents\\GitHub\\TP1_Reseau\\CMakeLists.txt\\Server.exe (C:\\Users\\gintzopoul\\Documents\\GitHub\\TP1_Reseau\\output\\bin\\Server.exe)\\C:\\Users\\gintzopoul\\Documents\\GitHub\\TP1_Reseau\\main\\exeServer\\src\\main.cpp",
+  "SelectedNode": "\\main\\exeServer\\src\\main.cpp",
   "PreviewInSolutionExplorer": false
 }

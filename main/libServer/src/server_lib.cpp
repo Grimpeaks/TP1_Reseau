@@ -94,10 +94,36 @@ bool ThunderChatServer::Accept_Client() {
 			return false;
 		}
 
-		std::array<char, 512> ipClientStr;
+
+		std::array<char, 512> buffer;
+		int receivedBytes = recv(client, buffer.data(), 512, 0);
+		if (receivedBytes < 0)
+		{
+			printf(" RECVBIG recv() error %ld.\n", WSAGetLastError());
+			std::cout << "Error1 " << receivedBytes << std::endl;
+			m_success = false;
+			return false;
+		}
+
+		std::string msgstr(buffer.begin(), buffer.begin() + receivedBytes);
+		nlohmann::json msg = nlohmann::json::parse(msgstr, nullptr, false);
+		if (msg != nlohmann::detail::value_t::discarded)
+		{
+			std::cout << msgstr;
+			/*Message fullMessage = Message(msg);
+			Client c = Client(client, fullMessage.get_team());
+			if (fullMessage.get_team() == Message::A) { if (this->nbEquipeA <= 5) { this->nbEquipeA += 1; } else { c.~Client(); } }
+			else if (fullMessage.get_team() == Message::B) { if (this->nbEquipeA <= 5) { this->nbEquipeB += 1; } else { c.~Client(); } }
+			else { m_success = false; return false; }
+
+			//this->m_listeClient.push_back(c);
+			std::cout << fullMessage.get_username() << " Is Connected !" << " Team " << fullMessage.get_team() << std::endl;*/
+		}
+
+		/*std::array<char, 512> ipClientStr;
 		std::cout << "Client " << inet_ntop(clientAddr.sa_family, &clientAddr, ipClientStr.data(), 512)
 			<< " is connected" << std::endl;
-		this->m_listeClient.push_back(client);
+		this->m_listeClient.push_back(client);*/
 	}
 }
 
@@ -129,12 +155,12 @@ bool ThunderChatServer::Recieve_Client() {
 			}
 			else if (FD_ISSET(client, &setReads)) {
 				std::array<char, 1024> buffer;
-				int receivedBytes = recv(client, buffer.data(), 1024, 0);
+				int receivedBytes = recv(client, buffer.data(), 512, 0);
 				if (receivedBytes < 0)
 				{
 					printf(" RECVBIG recv() error %ld.\n", WSAGetLastError());
 					std::cout << "Error1 " << receivedBytes << std::endl;
-					closesocket(this->m_socket);
+					this->m_success = false;
 					return false;
 				}
 
@@ -197,3 +223,24 @@ bool ThunderChatServer::Send_to_Client()
 }
 
 } // namespace thunderchat
+
+
+
+Client::Client(SOCKET s, Message::Team team) {
+	this->m_socket = s;
+	this->m_team = team;
+}
+
+SOCKET Client::getSocket() {
+	return this->m_socket;
+}
+
+Message::Team Client::getTeam() {
+	return this->m_team;
+}
+
+Client::~Client() {
+	shutdown(this->m_socket, SD_BOTH);
+	closesocket(this->m_socket);
+	std::cout << "You have been disconnected" << std::endl;
+}

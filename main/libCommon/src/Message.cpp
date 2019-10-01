@@ -15,17 +15,17 @@ Message::Message(std::string username, MsgType msg_type, Team team, std::string 
 
 Message::Message(nlohmann::json json)
 {
-    if (json["username"].is_null() || json["msg_type"].is_null() || json["team"].is_null() ||
-        json["msg"].is_null())
-    { 
-		this->m_isValide = false; 
+	if (json["username"].is_null() || json["msg_type"].is_null() || json["team"].is_null() ||
+		json["msg"].is_null())
+	{
+		this->m_isValide = false;
 		return;
-	
+
 	}
-    this->m_username = json["username"];
-    this->m_msg_type = json["msg_type"];
-    this->m_team = json["team"];
-    this->m_msg = json["msg"];
+    this->m_username = json.at("username");
+    this->m_msg_type = json.at("msg_type");
+    this->m_team = json.at("team");
+    this->m_msg = json.at("msg");
 }
 
 nlohmann::json Message::to_JSON() const {
@@ -39,4 +39,27 @@ nlohmann::json Message::to_JSON() const {
         return nullptr;
 }
 
-bool Message::Is_Message_Valide() { return this->m_isValide; }
+bool Message::Is_Message_Valide() const
+{
+	return this->m_isValide;
+}
+
+std::string Message::get_username() const
+{
+	return this->m_username;
+}
+
+Message::MsgType Message::get_msg_type() const
+{
+	return this->m_msg_type;
+}
+
+Message::Team Message::get_team() const
+{
+	return this->m_team;
+}
+
+std::string Message::get_msg() const
+{
+	return this->m_msg;
+}

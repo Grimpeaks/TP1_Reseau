@@ -16,7 +16,11 @@ public:
 	Message(std::string username, MsgType msg_type, Team  team, std::string msg);
     Message(nlohmann::json json);
 	nlohmann::json to_JSON() const ;
-    bool Is_Message_Valide();
+    bool Is_Message_Valide() const;
+	std::string get_username() const;
+	MsgType get_msg_type() const;
+	Team get_team() const;
+	std::string get_msg() const;
 
 private:
 	std::string m_username;

@@ -28,6 +28,9 @@ private:
   bool Recieve_Client();
   bool Send_to_Client();
 
+  int nbEquipeA;
+  int nbEquipeB;
+
 public:
     ThunderChatServer(std::string servAddress, u_short port);
 
@@ -37,4 +40,17 @@ public:
 
     void Stop();
 };
+
 } // namespace ThunderChat
+
+
+class Client {
+public:
+	Client(SOCKET s, Message::Team team);
+	SOCKET getSocket();
+	Message::Team getTeam();
+	~Client();
+private:
+	SOCKET m_socket;
+	Message::Team m_team;
+};
