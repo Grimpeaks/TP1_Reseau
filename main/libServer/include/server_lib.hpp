@@ -1,28 +1,5 @@
-#pragma once
-
-#ifdef _WIN32
-
-#define WIN32_LEAN_AND_MEAN
-#define NOMINMAX
-#include <WS2tcpip.h>
-#include <WinSock2.h>
-
-#pragma comment(lib, "Ws2_32.lib")
-
-#else
-
-#include <arpa/inet.h>
-#include <errno.h>
-#include <netdb.h>
-#include <netinet/in.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <unistd.h>
-
-using SOCKET = int;
-#define SD_BOTH SHUT_RDWR
-#define closesocket(s) close(s)
-#endif
+#include "network.hpp"
+#include "winnetworkconfig.hpp"
 
 #include <string>
 #include <vector>
@@ -41,6 +18,12 @@ private:
 
   std::vector<connectCallbackType> m_onConnectCallbacks;
   std::vector<disconnectCallbackType> m_onDisconnectCallbacks;
+  std::vector<SOCKET> m_listeClient;
+  SOCKET m_socket;
+
+  bool m_success=true;
+  bool Accept_Client();
+  bool Recieve_Client();
 
 public:
     ThunderChatServer(std::string servAddress, u_short port);
