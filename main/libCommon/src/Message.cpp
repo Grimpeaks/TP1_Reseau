@@ -1,15 +1,16 @@
 #include "Message.hpp"
 
-Message::Message(std::string username, MsgType msg_type, Team team, std::string msg){
-    if (username.size() < 1 || username.size() > 24 || m_msg.size() > 512 || m_msg.size() < 1)
-    { this->m_isValide = false;
-      return;
+Message::Message(std::string username, MsgType msg_type, Team team, std::string msg)
+{
+    if (username.size() <= 0 || username.size() > 24 || msg.size() > 512 || msg.size() <= 0)
+    { 
+		this->m_isValide = false;
+		return;
 	}
 	this->m_username = username;
 	this->m_msg_type = msg_type;
 	this->m_team = team;
 	this->m_msg = msg;
-
 }
 
 Message::Message(nlohmann::json json)
@@ -27,7 +28,7 @@ Message::Message(nlohmann::json json)
     this->m_msg = json["msg"];
 }
 
-const nlohmann::json Message::to_JSON() {
+nlohmann::json Message::to_JSON() const {
 	if (this->m_isValide) {
             nlohmann::json j = {{"username", this->m_username},
                                 {"msg_type", this->m_msg_type},
@@ -36,7 +37,6 @@ const nlohmann::json Message::to_JSON() {
             return j;
 	}
         return nullptr;
-	
 }
 
 bool Message::Is_Message_Valide() { return this->m_isValide; }

@@ -71,8 +71,10 @@ ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userNa
 			if (receivedBytes > 0 && receivedBytes <= 1024)
 			{
 				std::string str(buffer.begin(), buffer.begin() + receivedBytes);
-				std::for_each(m_onMessageCallbacks.begin(), m_onMessageCallbacks.end(), [&str](msgCallbackType callback) {
-					callback(str);
+				nlohmann::json msg = nlohmann::json::parse(str);
+				Message fullMessage = Message(msg);
+				std::for_each(m_onMessageCallbacks.begin(), m_onMessageCallbacks.end(), [&fullMessage](msgCallbackType callback) {
+					callback(fullMessage);
 				});
 				receivedBytes = 0;
 			}
@@ -106,19 +108,6 @@ ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userNa
 		sendJson(message.to_JSON());
 	}
 
-	void ThunderChatClient::SendString(const std::string& msg)
-	{
-		//std::array<char, 1024> buffer{};
-		//buffer = { reinterpret_cast<char>(msg.c_str()) };
-		int sentBytes = send(s, msg.c_str(), msg.size(), 0);
-		if (sentBytes < 0)
-		{
-			printf(" RECVBIG recv() error %ld.\n", WSAGetLastError());
-			std::cout << "Error5" << std::endl;
-			m_success = false;
-		}
-	}
-
 	void ThunderChatClient::sendJson(nlohmann::json json)
 	{
 		int sentJson = send(s, json.dump().c_str(), json.size(), 0);
@@ -128,4 +117,17 @@ ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userNa
 			m_success = false;
 		}
 	}
+
+	//void ThunderChatClient::SendString(const std::string& msg)
+	//{
+	//	//std::array<char, 1024> buffer{};
+	//	//buffer = { reinterpret_cast<char>(msg.c_str()) };
+	//	int sentBytes = send(s, msg.c_str(), msg.size(), 0);
+	//	if (sentBytes < 0)
+	//	{
+	//		printf(" RECVBIG recv() error %ld.\n", WSAGetLastError());
+	//		std::cout << "Error5" << std::endl;
+	//		m_success = false;
+	//	}
+	//}
 } // namespace thunderchat

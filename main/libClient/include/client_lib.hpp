@@ -17,7 +17,7 @@ namespace thunderchat
 class ThunderChatClient
 {
 private:
-	using msgCallbackType = std::function<void(std::string & msg/*const Message & msg*/)>;
+	using msgCallbackType = std::function<void(const Message & msg)>;
 	using disconnectCallbackType = std::function<void()>;
 
     std::unique_ptr<std::thread> m_receiveThread;

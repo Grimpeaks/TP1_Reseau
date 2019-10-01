@@ -8,9 +8,9 @@ int main(void)
 	network::WinNetworkConfig networkInit = network::WinNetworkConfig();
 	thunderchat::ThunderChatClient client = thunderchat::ThunderChatClient("127.0.0.1:8888", "POUPOU", Message::A);
 	
-	std::function<void(std::string)> y = [](std::string& msg)
+	std::function<void(const Message&)> printCallback = [](const Message& msg)
 	{
-		std::cout << msg << std::endl;
+		std::cout << msg.to_JSON()["msg"] << std::endl;
 	};
 
 	/*std::function<void(const Message&)> y = [](const Message& msg)
@@ -18,16 +18,14 @@ int main(void)
 		std::cout << msg << std::endl;
 	};*/
 
-	client.OnMessage(y);
+	client.OnMessage(printCallback);
 	bool sucess;
 	sucess = client.Connect();
 
 	if (sucess)
 	{
-		std::string msgg = "YPOOOOOoooooooooooooooo";
-		client.SendString(msgg);
+		client.SendToTeam("COUCOU");
 		std::cin.ignore();
-		client.SendString(msgg);
 		
 	}
 }
