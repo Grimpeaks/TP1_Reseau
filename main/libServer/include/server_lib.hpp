@@ -6,6 +6,7 @@
 #include <vector>
 #include <array>
 #include <functional>
+#include <thread>
 #include <iostream>
 #include <vector>
 
@@ -39,7 +40,9 @@ namespace thunderchat
   bool Accept_Client() noexcept;
   bool Receive_Client() noexcept;
   bool Send_to_Client(Message msg) noexcept;
-  void Disconnect_Client(SOCKET client)noexcept;
+  void Disconnect_Client(std::tuple<SOCKET, std::string, Message::Team> client)noexcept;
+  void RunServer()noexcept;
+  std::unique_ptr<std::thread> m_ServerThread;
 
   int nbEquipeA=0;
   int nbEquipeB=0;

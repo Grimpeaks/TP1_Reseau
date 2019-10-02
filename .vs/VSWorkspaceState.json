@@ -7,10 +7,10 @@
     "\\main\\exeServer",
     "\\main\\exeServer\\src",
     "\\main\\libClient",
-    "\\main\\libClient\\src",
+    "\\main\\libClient\\include",
     "\\main\\libServer",
-    "\\main\\libServer\\src"
+    "\\main\\libServer\\include"
   ],
-  "SelectedNode": "\\main\\libServer\\src\\server_lib.cpp",
+  "SelectedNode": "\\main\\libClient\\src\\client_lib.cpp",
   "PreviewInSolutionExplorer": false
 }

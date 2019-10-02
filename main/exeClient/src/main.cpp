@@ -11,6 +11,7 @@ int main(void)
 		{
 			std::cout << msg.get_username() << " : " << msg.get_msg() << std::endl;
 		};
+
 		client.OnMessage(printCallback);
 		bool success;
 		success = client.Connect();
