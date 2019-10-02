@@ -50,7 +50,11 @@ ThunderChatServer::ThunderChatServer(std::string servAddress, u_short port) noex
 }
 
 ThunderChatServer::~ThunderChatServer() {
+    for (auto& client : m_listeClient) { 
+		
+		Disconnect_Client(client, " ");
 
+	}
 	shutdown(m_socket, SD_BOTH);
     closesocket(m_socket);
 
@@ -176,6 +180,7 @@ bool ThunderChatServer::Receive_Client() noexcept {
 			if (FD_ISSET(client, &setErrors)) {
 				this->m_success = false;
 				return false;
+
 			}
 			else if (FD_ISSET(client, &setReads)) {
 				std::array<char, 1024> buffer;
