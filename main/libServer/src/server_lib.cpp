@@ -70,6 +70,9 @@ void ThunderChatServer::Stop()
 }
 
 bool ThunderChatServer::Accept_Client() {
+	if (this->nbEquipeA + this->nbEquipeB >= 10) {
+		return true;
+	}
 	fd_set set;
 	timeval time = { 0 };
 	FD_ZERO(&set);
@@ -94,10 +97,39 @@ bool ThunderChatServer::Accept_Client() {
 			return false;
 		}
 
-		std::array<char, 512> ipClientStr;
+
+		/*std::array<char, 512> buffer;
+		int receivedBytes = recv(client, buffer.data(), 512, 0);
+		if (receivedBytes < 0)
+		{
+			printf(" RECVBIG recv() error %ld.\n", WSAGetLastError());
+			std::cout << "Error1 " << receivedBytes << std::endl;
+			m_success = false;
+			return false;
+		}*/
+
+		//std::string msgstr(buffer.begin(), buffer.begin() + receivedBytes);
+		//nlohmann::json msg = nlohmann::json::parse(msgstr, nullptr, false);
+		//if (msg != nlohmann::detail::value_t::discarded)
+		//{
+		nlohmann::json j = { {"username","PUTE"},
+							{"msg_type", Message::PARTY},
+							{"team", Message::A},
+							{"msg", "Hello everyone !!"} };
+			Message fullMessage = Message(j);
+			Client c = Client(client, fullMessage.get_team());
+			if (fullMessage.get_team() == Message::A) { if (this->nbEquipeA <= 5) { this->nbEquipeA += 1; } else { c.~Client(); } }
+			else if (fullMessage.get_team() == Message::B) { if (this->nbEquipeA <= 5) { this->nbEquipeB += 1; } else { c.~Client(); } }
+			else { m_success = false; return false; }
+
+			//this->m_listeClient.push_back(c);
+			std::cout << fullMessage.get_username() << " Is Connected !" << " Team " << fullMessage.get_team() << std::endl;
+		//}
+
+		/*std::array<char, 512> ipClientStr;
 		std::cout << "Client " << inet_ntop(clientAddr.sa_family, &clientAddr, ipClientStr.data(), 512)
 			<< " is connected" << std::endl;
-		this->m_listeClient.push_back(client);
+		this->m_listeClient.push_back(client);*/
 	}
 }
 
@@ -110,8 +142,8 @@ bool ThunderChatServer::Recieve_Client() {
 	timeval timeout = { 0 };
 	for (auto& client : m_listeClient)
 	{
-		FD_SET(client, &setReads);
-		FD_SET(client, &setErrors);
+		FD_SET(client.getSocket(), &setReads);
+		FD_SET(client.getSocket(), &setErrors);
 	}
 
 	int selectResult = select(highestFd + 1, &setReads, nullptr, &setErrors, &timeout);
@@ -123,26 +155,105 @@ bool ThunderChatServer::Recieve_Client() {
 	else if (selectResult > 0) {
 		for (auto& client : m_listeClient)
 		{
-			if (FD_ISSET(client, &setErrors)) {
+			if (FD_ISSET(client.getSocket(), &setErrors)) {
 				this->m_success = false;
 				return false;
 			}
-			else if (FD_ISSET(client, &setReads)) {
+			else if (FD_ISSET(client.getSocket(), &setReads)) {
 				std::array<char, 1024> buffer;
-				int receivedBytes = recv(client, buffer.data(), 1024, 0);
+				int receivedBytes = recv(client.getSocket(), buffer.data(), 512, 0);
 				if (receivedBytes < 0)
 				{
 					printf(" RECVBIG recv() error %ld.\n", WSAGetLastError());
 					std::cout << "Error1 " << receivedBytes << std::endl;
-					closesocket(this->m_socket);
+					this->m_success = false;
 					return false;
 				}
 
 				std::cout << "I received : " << std::string(buffer.data(), receivedBytes).c_str() << std::endl;
+				
+				//Send_to_Client();
 			}
 		}
 	}
 
 }
 
+bool ThunderChatServer::Send_to_Client(Message msg)
+{
+    fd_set setWrite;
+    fd_set setErrors;
+    FD_ZERO(&setWrite);
+    FD_ZERO(&setErrors);
+    int highestFd = 0;
+    timeval timeout = {0};
+    for (auto& client : this->m_listeClient)
+    {
+        FD_SET(client.getSocket(), &setWrite);
+        FD_SET(client.getSocket(), &setErrors);
+    }
+
+    int selectResult = select(highestFd + 1, nullptr, &setWrite, &setErrors, &timeout);
+    if (selectResult == -1)
+    {
+        this->m_success = false;
+        return false;
+    }
+
+    else if (selectResult > 0)
+    {
+        for (auto& client : m_listeClient)
+        {
+            if (FD_ISSET(client.getSocket(), &setErrors))
+            {
+                this->m_success = false;
+                return false;
+            }
+            else if (FD_ISSET(client.getSocket(), &setWrite))
+            {
+                
+                if (msg.get_msg_type() == Message::PARTY  || (msg.get_msg_type() == Message::TEAM && client.getTeam() == msg.get_team())) 
+				{
+
+					std::string msgjson = msg.to_JSON().dump();
+
+					int sentJson = send(client.getSocket(), msgjson.c_str(), msgjson.size(), 0);
+					int sentBytes = send(client.getSocket(), msg.to_JSON().dump().c_str(), msg.to_JSON().dump().size(), 0);
+
+					if (msgjson.size() != sentBytes)
+					{
+						std::cout << "Error2" << std::endl;
+						closesocket(client.getSocket());
+
+						this->m_success = false;
+						return false;
+					}
+                }
+                
+            }
+        }
+    }
+}
+
 } // namespace thunderchat
+
+
+
+Client::Client(SOCKET s, Message::Team team) {
+	this->m_socket = s;
+	this->m_team = team;
+}
+
+SOCKET Client::getSocket() const {
+	return this->m_socket;
+}
+
+Message::Team Client::getTeam()const {
+	return this->m_team;
+}
+
+Client::~Client() {
+
+	shutdown(this->m_socket, SD_BOTH);
+	closesocket(this->m_socket);
+}

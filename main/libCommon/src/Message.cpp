@@ -34,7 +34,7 @@ Message::Message(nlohmann::json json) noexcept
 	}
 }
 
-nlohmann::json Message::to_JSON() const noexcept {
+nlohmann::json Message::to_JSON() const{
 	if (this->m_isValide) {
 		nlohmann::json j = { {"username", this->m_username},
 							{"msg_type", this->m_msg_type},
@@ -45,4 +45,8 @@ nlohmann::json Message::to_JSON() const noexcept {
 	return nullptr;
 }
 
-bool Message::isMessageValide() const noexcept { return this->m_isValide; }
+bool Message::isMessageValide() const { return this->m_isValide; }
+std::string Message::get_username() const { return this->m_username; }
+Message::MsgType Message::get_msg_type() const { return this->m_msg_type; }
+Message::Team Message::get_team() const { return this->m_team; }
+std::string Message::get_msg() const { return this->m_msg; }

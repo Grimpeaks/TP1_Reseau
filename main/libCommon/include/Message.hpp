@@ -16,8 +16,12 @@ public:
 
 	Message(std::string username, MsgType msg_type, Team  team, std::string msg) noexcept;
     Message(nlohmann::json json) noexcept;
-	nlohmann::json to_JSON() const noexcept;
-    bool isMessageValide() const noexcept;
+	nlohmann::json to_JSON() const;
+    bool isMessageValide() const;
+	std::string get_username() const;
+	MsgType get_msg_type() const;
+	Team get_team() const;
+	std::string get_msg() const;
 
 private:
 	std::string m_username;

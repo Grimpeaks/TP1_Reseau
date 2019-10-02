@@ -1,5 +1,6 @@
 #include "network.hpp"
 #include "winnetworkconfig.hpp"
+#include "Message.hpp"
 
 #include <string>
 #include <vector>
@@ -8,6 +9,16 @@
 #include <iostream>
 #include <vector>
 
+class Client {
+public:
+	Client(SOCKET s, Message::Team team);
+	SOCKET getSocket() const;
+	Message::Team getTeam() const;
+	~Client();
+private:
+	SOCKET m_socket;
+	Message::Team m_team;
+};
 namespace thunderchat
 {
 class ThunderChatServer
@@ -18,12 +29,16 @@ private:
 
   std::vector<connectCallbackType> m_onConnectCallbacks;
   std::vector<disconnectCallbackType> m_onDisconnectCallbacks;
-  std::vector<SOCKET> m_listeClient;
+  std::vector<Client> m_listeClient;
   SOCKET m_socket;
 
   bool m_success=true;
   bool Accept_Client();
   bool Recieve_Client();
+  bool Send_to_Client(Message msg);
+
+  int nbEquipeA=0;
+  int nbEquipeB=0;
 
 public:
     ThunderChatServer(std::string servAddress, u_short port);
@@ -34,4 +49,7 @@ public:
 
     void Stop();
 };
+
 } // namespace ThunderChat
+
+
