@@ -254,8 +254,8 @@ void ThunderChatServer::Disconnect_Client(SOCKET client) noexcept
 
 Client::Client(SOCKET s, Message::Team team) noexcept
 {
-    this->m_socket = s;
-    this->m_team = team;
+	this->m_socket = s;
+	this->m_team = team;
 }
 
 SOCKET Client::getSocket() const { return this->m_socket; }
@@ -265,6 +265,6 @@ Message::Team Client::getTeam() const { return this->m_team; }
 Client::~Client() noexcept
 {
 
-    shutdown(this->m_socket, SD_BOTH);
-    closesocket(this->m_socket);
+	shutdown(this->m_socket, SD_BOTH);
+	closesocket(this->m_socket);
 }
