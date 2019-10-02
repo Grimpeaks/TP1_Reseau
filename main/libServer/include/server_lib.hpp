@@ -11,14 +11,15 @@
 
 class Client {
 public:
-	Client(SOCKET s, Message::Team team);
+	Client(SOCKET s, Message::Team team) noexcept;
 	SOCKET getSocket() const;
 	Message::Team getTeam() const;
-	~Client();
+	~Client() noexcept;
 private:
 	SOCKET m_socket;
 	Message::Team m_team;
 };
+
 namespace thunderchat
 {
 class ThunderChatServer
@@ -33,21 +34,18 @@ private:
   SOCKET m_socket;
 
   bool m_success=true;
-  bool Accept_Client();
-  bool Recieve_Client();
-  bool Send_to_Client(Message msg);
+  bool Accept_Client() noexcept;
+  bool Receive_Client() noexcept;
+  bool Send_to_Client(Message msg) noexcept;
 
   int nbEquipeA=0;
   int nbEquipeB=0;
 
 public:
-    ThunderChatServer(std::string servAddress, u_short port);
-
-    void OnConnect(connectCallbackType connectCallback);
-
-    void OnDisconnect(disconnectCallbackType disconnectCallback);
-
-    void Stop();
+    ThunderChatServer(std::string servAddress, u_short port) noexcept;
+    void OnConnect(connectCallbackType connectCallback) noexcept;
+    void OnDisconnect(disconnectCallbackType disconnectCallback) noexcept;
+    void Stop() noexcept;
 };
 
 } // namespace ThunderChat

@@ -3,7 +3,7 @@
 
 namespace thunderchat
 {
-ThunderChatServer::ThunderChatServer(std::string servAddress, u_short port)
+ThunderChatServer::ThunderChatServer(std::string servAddress, u_short port) noexcept
 {
 	network::WinNetworkConfig networkInit = network::WinNetworkConfig();
     this->m_socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -40,38 +40,41 @@ ThunderChatServer::ThunderChatServer(std::string servAddress, u_short port)
 		return;
 	}
 	
-	while (true)
+	while (m_success)
 	{
 		Accept_Client();
 		if (m_listeClient.size() > 0) {
-			Recieve_Client();
+			Receive_Client();
 		}
-		
 	}
+
 }
 
 ThunderChatServer::~ThunderChatServer() {
 
 	shutdown(m_socket, SD_BOTH);
     closesocket(m_socket);
+
 }
 
-void ThunderChatServer::OnConnect(connectCallbackType connectCallback)
+void ThunderChatServer::OnConnect(connectCallbackType connectCallback) noexcept
 {
     m_onDisconnectCallbacks.push_back(connectCallback);
 }
 
-void ThunderChatServer::OnDisconnect(disconnectCallbackType disconnectCallback)
+void ThunderChatServer::OnDisconnect(disconnectCallbackType disconnectCallback) noexcept
 { 
 	m_onDisconnectCallbacks.push_back(disconnectCallback);
 }
 
-void ThunderChatServer::Stop() 
+
+void ThunderChatServer::Stop() noexcept
 { 
 	~ThunderChatServer();
+
 }
 
-bool ThunderChatServer::Accept_Client() {
+bool ThunderChatServer::Accept_Client() noexcept {
 	if (this->nbEquipeA + this->nbEquipeB >= 10) {
 		return true;
 	}
@@ -121,7 +124,7 @@ bool ThunderChatServer::Accept_Client() {
 			Message fullMessage = Message(j);
 			Client c = Client(client, fullMessage.get_team());
 			if (fullMessage.get_team() == Message::A) { if (this->nbEquipeA <= 5) { this->nbEquipeA += 1; } else { c.~Client(); } }
-			else if (fullMessage.get_team() == Message::B) { if (this->nbEquipeA <= 5) { this->nbEquipeB += 1; } else { c.~Client(); } }
+			else if (fullMessage.get_team() == Message::B) { if (this->nbEquipeB <= 5) { this->nbEquipeB += 1; } else { c.~Client(); } }
 			else { m_success = false; return false; }
 
 			//this->m_listeClient.push_back(c);
@@ -135,7 +138,7 @@ bool ThunderChatServer::Accept_Client() {
 	}
 }
 
-bool ThunderChatServer::Recieve_Client() {
+bool ThunderChatServer::Receive_Client() noexcept {
 	fd_set setReads;
 	fd_set setErrors;
 	FD_ZERO(&setReads);
@@ -181,7 +184,7 @@ bool ThunderChatServer::Recieve_Client() {
 
 }
 
-bool ThunderChatServer::Send_to_Client(Message msg)
+bool ThunderChatServer::Send_to_Client(Message msg) noexcept
 {
     fd_set setWrite;
     fd_set setErrors;
@@ -241,7 +244,7 @@ bool ThunderChatServer::Send_to_Client(Message msg)
 
 
 
-Client::Client(SOCKET s, Message::Team team) {
+Client::Client(SOCKET s, Message::Team team) noexcept {
 	this->m_socket = s;
 	this->m_team = team;
 }
@@ -254,7 +257,7 @@ Message::Team Client::getTeam()const {
 	return this->m_team;
 }
 
-Client::~Client() {
+Client::~Client() noexcept {
 
 	shutdown(this->m_socket, SD_BOTH);
 	closesocket(this->m_socket);
