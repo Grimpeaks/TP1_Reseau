@@ -31,17 +31,17 @@ private:
 	std::vector<disconnectCallbackType> m_onDisconnectCallbacks;
 	bool m_success;
 
-	void sendJson(nlohmann::json json);
-	void recvOnThread();
+	void sendJson(nlohmann::json json) noexcept;
+	void recvOnThread() noexcept;
 
 public:
-    ThunderChatClient(std::string servAddr, std::string usrName, Message::Team team);
-    ~ThunderChatClient();
-    bool Connect();
-    void OnMessage(msgCallbackType);
-    void OnDisconnect(disconnectCallbackType);
-    void SendToParty(const std::string& msg);
-    void SendToTeam(const std::string& msg);
-	void SendString(const std::string& msg);
+    ThunderChatClient(std::string servAddr, std::string usrName, Message::Team team) noexcept;
+    ~ThunderChatClient() noexcept;
+    bool Connect() noexcept;
+    void OnMessage(msgCallbackType) noexcept;
+    void OnDisconnect(disconnectCallbackType) noexcept;
+    void SendToParty(const std::string& msg) noexcept;
+    void SendToTeam(const std::string& msg) noexcept;
+	void SendString(const std::string& msg) noexcept;
 };
 } // namespace thunderchat
