@@ -10,13 +10,8 @@ int main(void)
 	
 	std::function<void(const Message&)> printCallback = [](const Message& msg)
 	{
-		std::cout << msg.to_JSON()["msg"] << std::endl;
+		std::cout << msg.to_JSON().at("username") << " : " << msg.to_JSON().at("msg") << std::endl;
 	};
-
-	/*std::function<void(const Message&)> y = [](const Message& msg)
-	{
-		std::cout << msg << std::endl;
-	};*/
 
 	client.OnMessage(printCallback);
 	bool sucess;

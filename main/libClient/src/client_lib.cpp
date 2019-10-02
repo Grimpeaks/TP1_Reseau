@@ -2,22 +2,22 @@
 
 namespace thunderchat
 {
-ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userName, Message::Team team)
-    : m_receiveThread(nullptr), m_servAddress("0.0.0.0"), m_servPort(8888), m_userName(userName), m_team(team), s(), addrv4Serv(),
-	m_onMessageCallbacks(), m_onDisconnectCallbacks(), m_success(true)
-{
-	std::cout << "Client" << std::endl;
+	ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userName, Message::Team team)
+		: m_receiveThread(nullptr), m_servAddress("0.0.0.0"), m_servPort(8888), m_userName(userName), m_team(team), s(), addrv4Serv(),
+		m_onMessageCallbacks(), m_onDisconnectCallbacks(), m_success(true)
+	{
+		std::cout << "Client" << std::endl;
 
-	std::size_t found = servAddress.find(":");
-	m_servAddress = std::string(servAddress.begin(), servAddress.begin() + found);
-	m_servPort = std::stoi(std::string(servAddress.begin() + found+1, servAddress.end()));
-}
+		std::size_t found = servAddress.find(":");
+		m_servAddress = std::string(servAddress.begin(), servAddress.begin() + found);
+		m_servPort = std::stoi(std::string(servAddress.begin() + found + 1, servAddress.end()));
+	}
 
 	ThunderChatClient::~ThunderChatClient()
 	{
 		std::for_each(m_onDisconnectCallbacks.begin(), m_onDisconnectCallbacks.end(), [](disconnectCallbackType callback) {
 			callback();
-		});
+			});
 
 		if (m_receiveThread != nullptr && m_receiveThread->joinable())
 		{
@@ -71,16 +71,23 @@ ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userNa
 			if (receivedBytes > 0 && receivedBytes <= 1024)
 			{
 				std::string str(buffer.begin(), buffer.begin() + receivedBytes);
-				nlohmann::json msg = nlohmann::json::parse(str);
-				Message fullMessage = Message(msg);
-				std::for_each(m_onMessageCallbacks.begin(), m_onMessageCallbacks.end(), [&fullMessage](msgCallbackType callback) {
-					callback(fullMessage);
-				});
-				receivedBytes = 0;
+				nlohmann::json msg = nlohmann::json::parse(str, nullptr, false);
+				if (msg.type() != nlohmann::detail::value_t::discarded)
+				{
+					Message fullMessage = Message(msg);
+					std::for_each(m_onMessageCallbacks.begin(), m_onMessageCallbacks.end(), [&fullMessage](msgCallbackType callback) {
+						callback(fullMessage);
+					});
+					receivedBytes = 0;
+				}
+				else 
+				{
+					std::cout << "Client : message not correctly formatted" << std::endl;
+				}
 			}
 			else if (receivedBytes > 1024 || receivedBytes < 0)
 			{
-				std::cout << "Client : recv ERROR";
+				std::cout << "Client : recv ERROR" << std::endl;
 				m_success = false;
 			}
 		}
@@ -110,7 +117,9 @@ ThunderChatClient::ThunderChatClient(std::string servAddress, std::string userNa
 
 	void ThunderChatClient::sendJson(nlohmann::json json)
 	{
-		int sentJson = send(s, json.dump().c_str(), json.size(), 0);
+		std::cout << json.dump() << std::endl;
+		std::string msg = json.dump();
+		int sentJson = send(s, msg.c_str(), msg.size(), 0);
 		if (sentJson < 0)
 		{
 			std::cout << "Client : send ERROR" << std::endl;

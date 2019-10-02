@@ -1,5 +1,6 @@
 #include <nlohmann/json.hpp>
 #include <string>
+#include <iostream>
 
 class Message
 {
@@ -13,10 +14,10 @@ public:
 		TEAM = 1
 	};
 
-	Message(std::string username, MsgType msg_type, Team  team, std::string msg);
-    Message(nlohmann::json json);
-	nlohmann::json to_JSON() const ;
-    bool Is_Message_Valide();
+	Message(std::string username, MsgType msg_type, Team  team, std::string msg) noexcept;
+    Message(nlohmann::json json) noexcept;
+	nlohmann::json to_JSON() const noexcept;
+    bool isMessageValide() const noexcept;
 
 private:
 	std::string m_username;
