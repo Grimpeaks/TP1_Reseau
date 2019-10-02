@@ -11,6 +11,6 @@
     "\\main\\libServer",
     "\\main\\libServer\\src"
   ],
-  "SelectedNode": "\\main\\exeServer\\src\\main.cpp",
+  "SelectedNode": "\\main\\libServer\\src\\server_lib.cpp",
   "PreviewInSolutionExplorer": false
 }

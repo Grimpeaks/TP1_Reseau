@@ -48,7 +48,7 @@ ThunderChatServer::ThunderChatServer(std::string servAddress, u_short port) noex
 
 ThunderChatServer::~ThunderChatServer()
 {
-    for (auto& client : m_listeClient) { Disconnect_Client(client, " "); }
+    for (auto& client : m_listeClient) { Disconnect_Client(std::get<0>(client)); }
     shutdown(m_socket, SD_BOTH);
     closesocket(m_socket);
 }
@@ -94,8 +94,8 @@ bool ThunderChatServer::Accept_Client() noexcept
         int receivedBytes = recv(client, buffer.data(), 1024, 0);
         if (receivedBytes < 0)
         {
-            printf(" RECVBIG recv() error %ld.\n", WSAGetLastError());
-            std::cout << "Error Accept Client -1 " << receivedBytes << std::endl;
+        
+            std::cout << "Error Accept Client Team " << receivedBytes << std::endl;
             m_success = false;
             return false;
         }
@@ -113,36 +113,13 @@ bool ThunderChatServer::Accept_Client() noexcept
             }
             else
             {
-                Disconnect_Client(client, fullMessage.get_username());
+                Disconnect_Client(client);
                 return true;
             }
-            this->m_listeClient.push_back(client);
-            this->m_listeTeam.push_back(fullMessage.get_team());
-            std::cout << fullMessage.get_username() << " Is Connected !"
-                      << " Team " << fullMessage.get_team() << std::endl;
+			this->m_listeClient.push_back(std::make_tuple(client, fullMessage.get_username(), fullMessage.get_team()));
+            std::cout << fullMessage.get_username() << " Is Connected !" << " Team " << fullMessage.get_team() << std::endl;
         }
     }
-}
-
-std::string GetLastErrorAsString()
-{
-    // Get the error message, if any.
-    DWORD errorMessageID = ::GetLastError();
-    std::cout << GetLastErrorAsString() << std::endl;
-    if (errorMessageID == 0) return std::string(); // No error message has been recorded
-
-    LPSTR messageBuffer = nullptr;
-    size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM |
-                                     FORMAT_MESSAGE_IGNORE_INSERTS,
-                                 NULL, errorMessageID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-                                 (LPSTR) &messageBuffer, 0, NULL);
-
-    std::string message(messageBuffer, size);
-
-    // Free the buffer.
-    LocalFree(messageBuffer);
-
-    return message;
 }
 
 bool ThunderChatServer::Receive_Client() noexcept
@@ -155,8 +132,8 @@ bool ThunderChatServer::Receive_Client() noexcept
     timeval timeout = {2};
     for (auto& client : m_listeClient)
     {
-        FD_SET(client, &setReads);
-        FD_SET(client, &setErrors);
+        FD_SET(std::get<0>(client), &setReads);
+        FD_SET(std::get<0>(client), &setErrors);
     }
 
     int selectResult = select(highestFd + 1, &setReads, nullptr, &setErrors, &timeout);
@@ -174,26 +151,23 @@ bool ThunderChatServer::Receive_Client() noexcept
         {
             index += 1;
 
-            if (FD_ISSET(client, &setErrors))
+            if (FD_ISSET(std::get<0>(client), &setErrors))
             {
                 this->m_success = false;
                 return false;
             }
-            else if (FD_ISSET(client, &setReads))
+            else if (FD_ISSET(std::get<0>(client), &setReads))
             {
                 std::array<char, 1024> buffer;
-                int receivedBytes = recv(client, buffer.data(), 1024, 0);
+                int receivedBytes = recv(std::get<0>(client), buffer.data(), 1024, 0);
                 if (receivedBytes < 0)
                 {
 
                     std::cout << "Error Receive " << receivedBytes << std::endl;
 
-					Disconnect_Client(client, " ");
+					Disconnect_Client(std::get<0>(client));
 
                     this->m_listeClient.erase(m_listeClient.begin() + index);
-                    this->m_listeTeam.erase(m_listeTeam.begin() + index);
-
-                    // break;
                     return true;
                 }
 
@@ -224,8 +198,8 @@ bool ThunderChatServer::Send_to_Client(Message msg) noexcept
     timeval timeout = {0};
     for (auto& client : this->m_listeClient)
     {
-        FD_SET(client, &setWrite);
-        FD_SET(client, &setErrors);
+        FD_SET(std::get<0>(client), &setWrite);
+        FD_SET(std::get<0>(client), &setErrors);
     }
 
     int selectResult = select(highestFd + 1, nullptr, &setWrite, &setErrors, &timeout);
@@ -240,21 +214,21 @@ bool ThunderChatServer::Send_to_Client(Message msg) noexcept
         int index = 0;
         for (auto& client : m_listeClient)
         {
-            if (FD_ISSET(client, &setErrors))
+            if (FD_ISSET(std::get<0>(client), &setErrors))
             {
                 this->m_success = false;
                 return false;
             }
-            else if (FD_ISSET(client, &setWrite))
+            else if (FD_ISSET(std::get<0>(client), &setWrite))
             {
 
                 if (msg.get_msg_type() == Message::PARTY ||
-                    (msg.get_msg_type() == Message::TEAM && m_listeTeam[index] == msg.get_team()))
+                    (msg.get_msg_type() == Message::TEAM && std::get<2>(client) == msg.get_team()))
                 {
 
                     std::string msgjson = msg.to_JSON().dump();
                     int sentBytes =
-                        send(client, msg.to_JSON().dump().c_str(), msg.to_JSON().dump().size(), 0);
+                        send(std::get<0>(client), msg.to_JSON().dump().c_str(), msg.to_JSON().dump().size(), 0);
 
                     if (msgjson.size() != sentBytes)
                     {
@@ -270,9 +244,8 @@ bool ThunderChatServer::Send_to_Client(Message msg) noexcept
     }
 }
 
-void ThunderChatServer::Disconnect_Client(SOCKET client, std::string username) noexcept
+void ThunderChatServer::Disconnect_Client(SOCKET client) noexcept
 {
-    std::cout << username + " SHUTDOWN" << std::endl;
     shutdown(client, SD_BOTH);
     closesocket(client);
 }
