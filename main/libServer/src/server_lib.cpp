@@ -70,7 +70,7 @@ void ThunderChatServer::OnDisconnect(disconnectCallbackType disconnectCallback) 
 
 void ThunderChatServer::Stop() noexcept
 { 
-	~ThunderChatServer();
+	this->~ThunderChatServer();
 
 }
 

@@ -43,6 +43,7 @@ private:
 
 public:
     ThunderChatServer(std::string servAddress, u_short port) noexcept;
+    ~ThunderChatServer() noexcept;
     void OnConnect(connectCallbackType connectCallback) noexcept;
     void OnDisconnect(disconnectCallbackType disconnectCallback) noexcept;
     void Stop() noexcept;
