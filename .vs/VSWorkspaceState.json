@@ -1,6 +1,16 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\main",
+    "\\main\\exeClient",
+    "\\main\\exeClient\\src",
+    "\\main\\exeServer",
+    "\\main\\exeServer\\src",
+    "\\main\\libClient",
+    "\\main\\libClient\\src",
+    "\\main\\libServer",
+    "\\main\\libServer\\src"
   ],
+  "SelectedNode": "\\main\\exeServer\\src\\main.cpp",
   "PreviewInSolutionExplorer": false
 }

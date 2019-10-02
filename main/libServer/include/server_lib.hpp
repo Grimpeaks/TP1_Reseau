@@ -15,6 +15,7 @@ public:
 	SOCKET getSocket() const;
 	Message::Team getTeam() const;
 	~Client() noexcept;
+	
 private:
 	SOCKET m_socket;
 	Message::Team m_team;
@@ -30,13 +31,15 @@ private:
 
   std::vector<connectCallbackType> m_onConnectCallbacks;
   std::vector<disconnectCallbackType> m_onDisconnectCallbacks;
-  std::vector<Client> m_listeClient;
+  std::vector<SOCKET> m_listeClient;
+  std::vector<Message::Team> m_listeTeam;
   SOCKET m_socket;
 
   bool m_success=true;
   bool Accept_Client() noexcept;
   bool Receive_Client() noexcept;
   bool Send_to_Client(Message msg) noexcept;
+  void Disconnect_Client(SOCKET client, std::string username)noexcept;
 
   int nbEquipeA=0;
   int nbEquipeB=0;
