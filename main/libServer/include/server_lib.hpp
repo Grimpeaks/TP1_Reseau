@@ -35,7 +35,7 @@ private:
   bool m_success=true;
   bool Accept_Client();
   bool Recieve_Client();
-  bool Send_to_Client();
+  bool Send_to_Client(Message msg);
 
   int nbEquipeA=0;
   int nbEquipeB=0;

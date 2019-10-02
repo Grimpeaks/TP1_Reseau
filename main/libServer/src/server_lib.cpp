@@ -172,14 +172,14 @@ bool ThunderChatServer::Recieve_Client() {
 
 				std::cout << "I received : " << std::string(buffer.data(), receivedBytes).c_str() << std::endl;
 				
-				Send_to_Client();
+				//Send_to_Client();
 			}
 		}
 	}
 
 }
 
-bool ThunderChatServer::Send_to_Client()
+bool ThunderChatServer::Send_to_Client(Message msg)
 {
     fd_set setWrite;
     fd_set setErrors;
@@ -211,18 +211,25 @@ bool ThunderChatServer::Send_to_Client()
             }
             else if (FD_ISSET(client.getSocket(), &setWrite))
             {
+                
+                if (msg.get_msg_type() == Message::PARTY  || (msg.get_msg_type() == Message::TEAM && client.getTeam() == msg.get_team())) 
+				{
 
-				Message msg = Message("SALEPUTE", Message::PARTY, Message::A, "SALEPUTE");
-                std::string msgjson = msg.to_JSON().dump();
-                int sentJson = send(client.getSocket(), msgjson.c_str(), msgjson.size(), 0);
+					std::string msgjson = msg.to_JSON().dump();
 
-                int sentBytes = send(client.getSocket(), msg.to_JSON().dump().c_str(),msg.to_JSON().dump().size(), 0);
-                if (msgjson.size() != sentBytes)
-                {
-                    std::cout << "Error2" << std::endl;
-                    closesocket(client.getSocket());
-                    return EXIT_FAILURE;
+					int sentJson = send(client.getSocket(), msgjson.c_str(), msgjson.size(), 0);
+					int sentBytes = send(client.getSocket(), msg.to_JSON().dump().c_str(), msg.to_JSON().dump().size(), 0);
+
+					if (msgjson.size() != sentBytes)
+					{
+						std::cout << "Error2" << std::endl;
+						closesocket(client.getSocket());
+
+						this->m_success = false;
+						return false;
+					}
                 }
+                
             }
         }
     }
