@@ -48,9 +48,12 @@ ThunderChatServer::ThunderChatServer(std::string servAddress, u_short port)
 		}
 		
 	}
-		
-	
-	
+}
+
+ThunderChatServer::~ThunderChatServer() {
+
+	shutdown(m_socket, SD_BOTH);
+    closesocket(m_socket);
 }
 
 void ThunderChatServer::OnConnect(connectCallbackType connectCallback)
@@ -64,9 +67,8 @@ void ThunderChatServer::OnDisconnect(disconnectCallbackType disconnectCallback)
 }
 
 void ThunderChatServer::Stop() 
-{
-
-
+{ 
+	~ThunderChatServer();
 }
 
 bool ThunderChatServer::Accept_Client() {
