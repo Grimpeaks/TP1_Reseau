@@ -9,7 +9,9 @@
 #include <memory>
  
 #include "network.hpp"
+#ifdef _WIN32
 #include "winnetworkconfig.hpp"
+#endif
 #include "Message.hpp"
 
 namespace thunderchat

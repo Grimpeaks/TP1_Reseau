@@ -4,7 +4,9 @@ namespace thunderchat
 {
 ThunderChatServer::ThunderChatServer(std::string servAddress, u_short port) noexcept
 {
+#ifdef _WIN32
     network::WinNetworkConfig networkInit = network::WinNetworkConfig();
+#endif
     this->m_socket = socket(AF_INET, SOCK_STREAM, 0);
     if (m_socket < 0)
     {

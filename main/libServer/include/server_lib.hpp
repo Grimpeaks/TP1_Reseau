@@ -1,5 +1,7 @@
 #include "network.hpp"
+#ifdef _WIN32
 #include "winnetworkconfig.hpp"
+#endif
 #include "Message.hpp"
 
 #include <string>
