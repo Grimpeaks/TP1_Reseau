@@ -86,11 +86,6 @@ namespace thunderchat
 					std::cout << "Client : message not correctly formatted" << std::endl;
 				}
 			}
-			//else if (receivedBytes > 1024 || receivedBytes < 0)
-			//{
-			//	std::cout << "Client : recv ERROR" << std::endl;
-			//	m_success = false;
-			//}
 		}
 	}
 
@@ -126,17 +121,4 @@ namespace thunderchat
 			m_success = false;
 		}
 	}
-
-	//void ThunderChatClient::SendString(const std::string& msg)
-	//{
-	//	//std::array<char, 1024> buffer{};
-	//	//buffer = { reinterpret_cast<char>(msg.c_str()) };
-	//	int sentBytes = send(s, msg.c_str(), msg.size(), 0);
-	//	if (sentBytes < 0)
-	//	{
-	//		printf(" RECVBIG recv() error %ld.\n", WSAGetLastError());
-	//		std::cout << "Error5" << std::endl;
-	//		m_success = false;
-	//	}
-	//}
 } // namespace thunderchat
