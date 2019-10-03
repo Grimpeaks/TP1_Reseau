@@ -73,9 +73,11 @@ bool ThunderChatServer::Accept_Client() noexcept
     if (this->nbEquipeA + this->nbEquipeB >= 10) { return true; }
     fd_set set;
     timeval time = {0};
+	std::vector<SOCKET> listeSockets;
     FD_ZERO(&set);
     FD_SET(m_socket, &set);
-    int selectReady = select(0, &set, nullptr, nullptr, &time);
+	listeSockets.push_back(m_socket);
+    int selectReady = select(getNfds(listeSockets), &set, nullptr, nullptr, &time);
     if (selectReady == -1)
     {
         std::cout << "Error select accept" << std::endl;
@@ -136,15 +138,16 @@ bool ThunderChatServer::Receive_Client() noexcept
     fd_set setErrors;
     FD_ZERO(&setReads);
     FD_ZERO(&setErrors);
-    int highestFd = 0;
     timeval timeout = {2};
+	std::vector<SOCKET> listeSockets;
     for (auto& client : m_listeClient)
     {
         FD_SET(std::get<0>(client), &setReads);
         FD_SET(std::get<0>(client), &setErrors);
+		listeSockets.push_back(std::get<0>(client));
     }
 
-    int selectResult = select(highestFd + 1, &setReads, nullptr, &setErrors, &timeout);
+    int selectResult = select(getNfds(listeSockets), &setReads, nullptr, &setErrors, &timeout);
     if (selectResult == -1)
     {
         this->m_success = false;
@@ -197,13 +200,15 @@ bool ThunderChatServer::Send_to_Client(Message msg) noexcept
     FD_ZERO(&setErrors);
     int highestFd = 0;
     timeval timeout = {0};
+	std::vector<SOCKET> listeSockets;
     for (auto& client : this->m_listeClient)
     {
         FD_SET(std::get<0>(client), &setWrite);
         FD_SET(std::get<0>(client), &setErrors);
+		listeSockets.push_back(std::get<0>(client));
     }
 
-    int selectResult = select(highestFd + 1, nullptr, &setWrite, &setErrors, &timeout);
+    int selectResult = select(getNfds(listeSockets), nullptr, &setWrite, &setErrors, &timeout);
     if (selectResult == -1)
     {
         this->m_success = false;
@@ -255,6 +260,15 @@ void ThunderChatServer::Disconnect_Client(std::tuple<SOCKET, std::string, Messag
     closesocket(std::get<0>(client));
 }
 
+int ThunderChatServer::getNfds(std::vector<SOCKET> listeSockets) noexcept
+{
+	#ifdef _WIN32
+		return 0;
+	#else
+		return std::max(listeSockets) + 1;
+	#endif // _WIN32
+}
+
 void ThunderChatServer::RunServer() noexcept
 {
 	while (m_success)
@@ -266,19 +280,19 @@ void ThunderChatServer::RunServer() noexcept
 
 } // namespace thunderchat
 
-Client::Client(SOCKET s, Message::Team team) noexcept
-{
-	this->m_socket = s;
-	this->m_team = team;
-}
-
-SOCKET Client::getSocket() const { return this->m_socket; }
-
-Message::Team Client::getTeam() const { return this->m_team; }
-
-Client::~Client() noexcept
-{
-
-	shutdown(this->m_socket, SD_BOTH);
-	closesocket(this->m_socket);
-}
+//Client::Client(SOCKET s, Message::Team team) noexcept
+//{
+//	this->m_socket = s;
+//	this->m_team = team;
+//}
+//
+//SOCKET Client::getSocket() const { return this->m_socket; }
+//
+//Message::Team Client::getTeam() const { return this->m_team; }
+//
+//Client::~Client() noexcept
+//{
+//
+//	shutdown(this->m_socket, SD_BOTH);
+//	closesocket(this->m_socket);
+//}
