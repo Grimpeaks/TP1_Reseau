@@ -15,3 +15,5 @@ set(HEADERS ${INCLUDE_FOLDER}/server_lib.hpp)
 #Main lib
 add_library(server_lib ${SOURCES} ${HEADERS})
 target_include_directories(server_lib SYSTEM INTERFACE ${INCLUDE_FOLDER})
+
+target_link_libraries(server_lib PUBLIC common_lib)

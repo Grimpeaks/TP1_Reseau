@@ -1,7 +1,14 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\main",
+    "\\main\\exeServer",
+    "\\main\\exeServer\\src",
+    "\\main\\libCommon",
+    "\\main\\libCommon\\include",
+    "\\main\\libServer",
+    "\\main\\libServer\\src"
   ],
-  "SelectedNode": "\\C:\\Users\\Grimpeaks\\Documents\\GitHub\\UQAC\\maitrise1\\Reseau\\TP1_Reseau\\CMakeLists.txt",
+  "SelectedNode": "\\main\\exeServer\\src\\main.cpp",
   "PreviewInSolutionExplorer": false
 }
