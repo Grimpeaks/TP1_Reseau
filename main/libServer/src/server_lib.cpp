@@ -267,7 +267,7 @@ int ThunderChatServer::getNfds(std::vector<SOCKET> listeSockets) noexcept
 	#ifdef _WIN32
 		return 0;
 	#else
-		return std::max(listeSockets) + 1;
+		return std::max_element(listeSockets) + 1;
 	#endif // _WIN32
 }
 
