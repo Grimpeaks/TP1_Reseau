@@ -1,3 +1,4 @@
+#ifdef _WIN32
 #pragma once
 
 namespace network
@@ -21,3 +22,4 @@ namespace network
 		static WORD s_version; // Requested version of the API
 	};
 }
+#endif // _WIN32

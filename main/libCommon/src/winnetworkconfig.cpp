@@ -1,3 +1,4 @@
+#ifdef _WIN32
 #include "network.hpp"
 #include "winnetworkconfig.hpp"
 
@@ -26,3 +27,4 @@ namespace network
 		return *this;
 	}
 }
+#endif // _WIN32
