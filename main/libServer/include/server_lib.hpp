@@ -11,6 +11,7 @@
 #include <thread>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 //class Client {
 //public:
