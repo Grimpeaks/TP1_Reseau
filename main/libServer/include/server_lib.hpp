@@ -6,6 +6,7 @@
 #include <vector>
 #include <array>
 #include <functional>
+#include <thread>
 #include <iostream>
 #include <vector>
 
@@ -23,23 +24,25 @@ private:
 
 namespace thunderchat
 {
-class ThunderChatServer
-{
-private:
-  using connectCallbackType =  std::function<void(const std::string& client)>;
-  using disconnectCallbackType = std::function<void(const std::string& client)>;
+	class ThunderChatServer
+	{
+	private:
+		using connectCallbackType = std::function<void(const std::string& client)>;
+		using disconnectCallbackType = std::function<void(const std::string& client)>;
 
-  std::vector<connectCallbackType> m_onConnectCallbacks;
-  std::vector<disconnectCallbackType> m_onDisconnectCallbacks;
-  std::vector<SOCKET> m_listeClient;
-  std::vector<Message::Team> m_listeTeam;
+		std::vector<connectCallbackType> m_onConnectCallbacks;
+		std::vector<disconnectCallbackType> m_onDisconnectCallbacks;
+		std::vector<std::tuple<SOCKET, std::string, Message::Team>> m_listeClient;
+		 
   SOCKET m_socket;
 
   bool m_success=true;
   bool Accept_Client() noexcept;
   bool Receive_Client() noexcept;
   bool Send_to_Client(Message msg) noexcept;
-  void Disconnect_Client(SOCKET client, std::string username)noexcept;
+  void Disconnect_Client(std::tuple<SOCKET, std::string, Message::Team> client)noexcept;
+  void RunServer()noexcept;
+  std::unique_ptr<std::thread> m_ServerThread;
 
   int nbEquipeA=0;
   int nbEquipeB=0;
