@@ -1,6 +1,9 @@
-#include <fmt/core.h>
-#include <fmt/format.h>
-#include <fmt/format-inl.h>
+#include "network.hpp"
+#ifdef _WIN32
+#include "winnetworkconfig.hpp"
+#endif
+#include "Message.hpp"
+
 #include <string>
 #include <vector>
 #include <array>
@@ -9,12 +12,6 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
-#include "network.hpp"
-#ifdef _WIN32
-#include "winnetworkconfig.hpp"
-#endif
-#include "Message.hpp"
 
 //class Client {
 //public:
@@ -38,7 +35,7 @@ namespace thunderchat
 
 		std::vector<connectCallbackType> m_onConnectCallbacks;
 		std::vector<disconnectCallbackType> m_onDisconnectCallbacks;
-		std::vector<std::tuple<SOCKET, sockaddr_in, std::string, Message::Team>> m_listeClient;
+		std::vector<std::tuple<SOCKET, std::string, Message::Team>> m_listeClient;
 
 		SOCKET m_socket;
 
@@ -46,7 +43,7 @@ namespace thunderchat
 		bool Accept_Client() noexcept;
 		bool Receive_Client() noexcept;
 		bool Send_to_Client(Message msg) noexcept;
-		void Disconnect_Client(std::tuple<SOCKET, sockaddr_in, std::string, Message::Team> client) noexcept;
+		void Disconnect_Client(std::tuple<SOCKET, std::string, Message::Team> client) noexcept;
 		void RunServer() noexcept;
 		int getNfds(std::vector<SOCKET> listeSockets) noexcept;
 		std::unique_ptr<std::thread> m_ServerThread;

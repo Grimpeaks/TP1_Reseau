@@ -12,12 +12,12 @@ int main(void)
 
 	std::function<void(const std::string&)> CallbackConnected = [](const std::string& client)
 	{
-		std::cout << client << " : CONNECTED" << std::endl;
+		std::cout << client << " IS CONNECTED" << std::endl;
 	};
 
 	std::function<void(const std::string&)> CallbackDisctonnected = [](const std::string& client)
 	{
-		std::cout << client << " : DISCONNECTED" << std::endl;
+		std::cout << client << " IS DISCONNECTED" << std::endl;
 	};
 
 	server.OnConnect(CallbackConnected);
