@@ -87,9 +87,9 @@ bool ThunderChatServer::Accept_Client() noexcept
     }
     else if (selectReady > 0)
     {
-        sockaddr clientAddr;
+		sockaddr_in clientAddr;
         socklen_t clientAddrSize = sizeof(clientAddr);
-        SOCKET client = accept(m_socket, &clientAddr, &clientAddrSize);
+        SOCKET client = accept(m_socket, reinterpret_cast<sockaddr*>(&clientAddr), &clientAddrSize);
         if (client <= 0)
         {
             std::cout << "Error Accept Client";
@@ -111,7 +111,7 @@ bool ThunderChatServer::Accept_Client() noexcept
         if (msg != nlohmann::detail::value_t::discarded)
         {
             Message fullMessage = Message(msg);
-			std::tuple tupleClient = std::make_tuple(client, fullMessage.get_username(), fullMessage.get_team());
+			std::tuple tupleClient = std::make_tuple(client, clientAddr, fullMessage.get_username(), fullMessage.get_team());
             if (this->nbEquipeA < 5 && fullMessage.get_team() == Message::A)
             { this->nbEquipeA += 1; }
             else if (this->nbEquipeB < 5 && fullMessage.get_team() == Message::B)
@@ -125,8 +125,11 @@ bool ThunderChatServer::Accept_Client() noexcept
             }
 			this->m_listeClient.push_back(tupleClient);
 
-			std::for_each(m_onConnectCallbacks.begin(), m_onConnectCallbacks.end(), [tupleClient](connectCallbackType callback) {
-				callback(std::get<1>(tupleClient));
+			sockaddr_in clientAddr = std::get<1>(tupleClient);
+			std::string ipStr = inet_ntoa(clientAddr.sin_addr);
+			int port = ntohs(clientAddr.sin_port);
+			std::for_each(m_onConnectCallbacks.begin(), m_onConnectCallbacks.end(), [ipStr, port](connectCallbackType callback) {
+				callback(fmt::format("{}:{}", ipStr.c_str(), port));
 			});
 
 			Send_to_Client(Message(fullMessage.get_username(), Message::PARTY,fullMessage.get_team(),"IS CONNECTED"));
@@ -232,7 +235,7 @@ bool ThunderChatServer::Send_to_Client(Message msg) noexcept
             {
 
                 if (msg.get_msg_type() == Message::PARTY ||
-                    (msg.get_msg_type() == Message::TEAM && std::get<2>(client) == msg.get_team()))
+                    (msg.get_msg_type() == Message::TEAM && std::get<3>(client) == msg.get_team()))
                 {
 
                     std::string msgjson = msg.to_JSON().dump();
@@ -249,14 +252,17 @@ bool ThunderChatServer::Send_to_Client(Message msg) noexcept
     }
 }
 
-void ThunderChatServer::Disconnect_Client(std::tuple<SOCKET, std::string, Message::Team> client) noexcept
+void ThunderChatServer::Disconnect_Client(std::tuple<SOCKET, sockaddr_in, std::string, Message::Team> client) noexcept
 {
-	std::string username = std::get<1>(client);
-	std::for_each(m_onDisconnectCallbacks.begin(), m_onDisconnectCallbacks.end(), [username](disconnectCallbackType callback) {
-		callback(username);
+	sockaddr_in clientAddr = std::get<1>(client);
+	std::string ipStr = inet_ntoa(clientAddr.sin_addr);
+	int port = ntohs(clientAddr.sin_port);
+	std::for_each(m_onDisconnectCallbacks.begin(), m_onDisconnectCallbacks.end(), [ipStr, port](disconnectCallbackType callback) {
+		callback(fmt::format("{}:{}", ipStr.c_str(), port));
 	});
 
-	Send_to_Client(Message(username, Message::PARTY, std::get<2>(client), " IS DISCONNECTED"));
+	std::string username = std::get<2>(client);
+	Send_to_Client(Message(username, Message::PARTY, std::get<3>(client), " IS DISCONNECTED"));
 
     shutdown(std::get<0>(client), SD_BOTH);
     closesocket(std::get<0>(client));
